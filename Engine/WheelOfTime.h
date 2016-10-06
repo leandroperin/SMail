@@ -38,6 +38,8 @@ class WheelOfTime {
 
 	std::queue<Event *>* center1queue;
 	std::queue<Event *>* center2queue;
+	int center1capacity;
+	int center2capacity;
 
 	Event* lastArrival;
 

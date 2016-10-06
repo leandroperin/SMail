@@ -4676,7 +4676,7 @@ object frmMain: TfrmMain
   end
   object clock: TTimer
     Enabled = False
-    Interval = 10
+    Interval = 100
     OnTimer = clockTimer
     Left = 136
     Top = 120

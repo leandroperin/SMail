@@ -122,7 +122,7 @@ void __fastcall TfrmMain::clockTimer(TObject *Sender)
 
 		int inSystemMessages = this->wheel->getInSystemMessagesCounter();
 		if (this->lblMinMessagesValue->Caption == "0") {
-            this->lblMinMessagesValue->Caption = inSystemMessages;
+			this->lblMinMessagesValue->Caption = inSystemMessages;
 		}
 		if (inSystemMessages < this->lblMinMessagesValue->Caption) {
 			this->lblMinMessagesValue->Caption = inSystemMessages;

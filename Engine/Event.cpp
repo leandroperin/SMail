@@ -21,6 +21,18 @@ int Event::getTime() {
     return this->executingTime;
 }
 
+void Event::incTime(double _time) {
+    this->executingTime += _time;
+}
+
+int Event::getInQueueTime() {
+    return this->inQueueTime;
+}
+
+void Event::setInQueueTime(int _time) {
+    this->inQueueTime = _time;
+}
+
 const char* Event::getDescription() {
 	return this->description;
 }
@@ -59,6 +71,10 @@ Destiny Event::getMessageDestiny() {
 
 int Event::getMessageArrivalTime() {
     return this->message->getArrivalTime();
+}
+
+Status Event::getMessageStatus() {
+    return this->message->getStatus();
 }
 
 int Event::execute() {

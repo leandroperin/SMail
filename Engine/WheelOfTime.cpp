@@ -19,6 +19,8 @@ WheelOfTime::WheelOfTime() {
 
 	this->center1queue = new std::queue<Event*>;
 	this->center2queue = new std::queue<Event*>;
+	this->center1capacity = frmSettings->edtCenter1Capacity->Text.ToInt();
+    this->center2capacity = frmSettings->edtCenter2Capacity->Text.ToInt();
 
 	this->currentTime = 0;
 
@@ -149,15 +151,59 @@ void WheelOfTime::executeEvents() {
 
 			this->pastEvents->push_back(event);
 
-			event->execute();
+			if (event->getMessageStatus() == Processing) {
+				if (event->getMessageDirection() == LL ||
+					event->getMessageDirection() == RL) {
+					this->center1capacity++;
+
+					if (!this->center1queue->empty()) {
+						Event* queuedEvent = this->center1queue->front();
+						this->center1queue->pop();
+						queuedEvent->incTime(this->currentTime - queuedEvent->getInQueueTime());
+                        this->addEvent(queuedEvent);
+					}
+				} else {
+					this->center2capacity++;
+
+					if (!this->center2queue->empty()) {
+						Event* queuedEvent = this->center2queue->front();
+						this->center2queue->pop();
+						queuedEvent->incTime(this->currentTime - queuedEvent->getInQueueTime());
+                        this->addEvent(queuedEvent);
+					}
+                }
+			}
+
+			int toProcess = event->execute();
 
 			Event* nextFutureEvent = event->getNextEvent();
 
-			if (nextFutureEvent != 0)
-				this->addEvent(nextFutureEvent);
-			else {
-				this->computeStatistics(event);
+			if (nextFutureEvent != 0) {
+             	if (toProcess == 1) {
+					if (this->center1capacity > 0) {
+						toProcess = 0;
+						this->center1capacity--;
+					} else {
+						nextFutureEvent->setInQueueTime(this->currentTime);
+						this->center1queue->push(nextFutureEvent);
+					}
+				} else if (toProcess == 2) {
+					if (this->center2capacity > 0) {
+						toProcess = 0;
+						this->center2capacity--;
+					} else {
+						nextFutureEvent->setInQueueTime(this->currentTime);
+                        this->center2queue->push(nextFutureEvent);
+                    }
+				}
+
+				if (toProcess == 0) {
+					this->addEvent(nextFutureEvent);
+				}
 			}
+
+			if (nextFutureEvent == 0)
+				this->computeStatistics(event);
 
 			if (event == this->lastArrival)
 				this->createMessage();
