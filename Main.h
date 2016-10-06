@@ -14,6 +14,8 @@
 #include <pngimage.hpp>
 #include <Menus.hpp>
 #include <Graphics.hpp>
+#include <Dialogs.hpp>
+#include <ExtDlgs.hpp>
 #include <sstream>
 #include "WheelOfTime.h"
 #include "AboutUs.h"
@@ -70,6 +72,12 @@ __published:	// IDE-managed Components
 	TLabel *lblMaxMessageValue;
 	TImage *imgRocketOff;
 	TImage *imgRocketOn;
+	TRichEdit *richQueue1;
+	TRichEdit *richQueue2;
+	TLabel *lblQueue1;
+	TLabel *lblQueue2;
+	TSaveTextFileDialog *saveDlg;
+	TMemo *memoStatistics;
 	void __fastcall btnExitClick(TObject *Sender);
 	void __fastcall btnAboutUsClick(TObject *Sender);
 	void __fastcall btnSimSettingsClick(TObject *Sender);
@@ -77,6 +85,7 @@ __published:	// IDE-managed Components
 	void __fastcall FormActivate(TObject *Sender);
 	void __fastcall btnPauseResumeClick(TObject *Sender);
 	void __fastcall clockTimer(TObject *Sender);
+	void __fastcall btnShowResultsClick(TObject *Sender);
 private:	// User declarations
 	void addPastEvent(Event*);
 	bool isRunning;

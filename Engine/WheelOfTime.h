@@ -18,6 +18,9 @@ class WheelOfTime {
 	void addEvent(Event*);
 	void increaseTime();
 
+	std::list<Event*>* getCenter1Queue();
+	std::list<Event*>* getCenter2Queue();
+
 	int getMessageCounter();
 	int getInSystemMessagesCounter();
 	double getInSystemMessagesAverage();
@@ -36,8 +39,8 @@ class WheelOfTime {
 	std::list<Event*>* eventsList;
 	std::list<Event *>* pastEvents;
 
-	std::queue<Event *>* center1queue;
-	std::queue<Event *>* center2queue;
+	std::list<Event *>* center1queue;
+	std::list<Event *>* center2queue;
 	int center1capacity;
 	int center2capacity;
 

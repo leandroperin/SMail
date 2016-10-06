@@ -151,6 +151,32 @@ void __fastcall TfrmMain::clockTimer(TObject *Sender)
 		this->lblRRCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(RR))
 		+ " / " + IntToStr(this->wheel->getTypeCounter(RR));
 
+		this->richQueue1->Clear();
+		this->richQueue2->Clear();
+		std::list<Event*>* queueCenter1 = this->wheel->getCenter1Queue();
+		std::list<Event*>* queueCenter2 = this->wheel->getCenter2Queue();
+
+		std::list<Event*>::iterator it;
+
+		it = queueCenter1->begin();
+		while (it != queueCenter1->end()) {
+			std::stringstream ss;
+			ss << "Mensagem: " << (*it)->getMessageID();
+			richQueue1->Lines->Add(ss.str().c_str());
+
+			++it;
+		}
+
+		it = queueCenter2->begin();
+		while (it != queueCenter2->end()) {
+			std::stringstream ss;
+			ss << "Mensagem: " << (*it)->getMessageID();
+			richQueue2->Lines->Add(ss.str().c_str());
+
+			++it;
+		}
+
+
 		if (this->lblSimulatedValue->Caption.ToDouble() >=
 			frmSettings->edtMaxSimTime->Text.ToDouble()) {
 			this->btnStartStopClick(this->clock);
@@ -163,4 +189,59 @@ void __fastcall TfrmMain::clockTimer(TObject *Sender)
 }
 //---------------------------------------------------------------------------
 
+
+void __fastcall TfrmMain::btnShowResultsClick(TObject *Sender)
+{
+	this->memoStatistics->Clear();
+
+	this->memoStatistics->Lines->Add("UNIVERSIDADE FEDERAL DE SANTA CATARINA");
+	this->memoStatistics->Lines->Add("INE5425 - Modelagem e Simulação");
+	this->memoStatistics->Lines->Add("Leandro Perin de Oliveira - 14100846");
+	this->memoStatistics->Lines->Add("Gustavo Garcia Gava - 14100832");
+
+	this->memoStatistics->Lines->Add("");
+	this->memoStatistics->Lines->Add("---------------------------------------");
+	this->memoStatistics->Lines->Add("Sistema de Simulação SMail - Resultados");
+	this->memoStatistics->Lines->Add("---------------------------------------");
+
+	this->memoStatistics->Lines->Add("");
+	this->memoStatistics->Lines->Add("Tempo Simulado (s): "
+	+ this->lblSimulatedValue->Caption);
+
+	this->memoStatistics->Lines->Add("");
+	this->memoStatistics->Lines->Add("Número de Mensagens no Sistema");
+	this->memoStatistics->Lines->Add("MIN: " + this->lblMinMessagesValue->Caption);
+	this->memoStatistics->Lines->Add("MÉDIA: " + this->lblAverageMessagesValue->Caption);
+	this->memoStatistics->Lines->Add("MAX: " + this->lblMaxMessagesValue->Caption);
+
+	this->memoStatistics->Lines->Add("");
+	this->memoStatistics->Lines->Add("Taxa Média de Ocupação dos Centros");
+	this->memoStatistics->Lines->Add("Centro 1: " + this->lblCenter1Average->Caption);
+	this->memoStatistics->Lines->Add("Centro 2: " + this->lblCenter2Average->Caption);
+
+	this->memoStatistics->Lines->Add("");
+	this->memoStatistics->Lines->Add("Quantidade de Mensagens");
+	this->memoStatistics->Lines->Add("Despachadas :"
+	+ IntToStr(this->wheel->getDispatchedMessagesCounter()));
+	this->memoStatistics->Lines->Add("Total :"
+	+ IntToStr(this->wheel->getMessageCounter()));
+
+	this->memoStatistics->Lines->Add("");
+	this->memoStatistics->Lines->Add("Quantidade de Mensagens por Tipo");
+	this->memoStatistics->Lines->Add("LL: " + IntToStr(this->wheel->getTypeCounter(LL)));
+	this->memoStatistics->Lines->Add("LR: " + IntToStr(this->wheel->getTypeCounter(LR)));
+	this->memoStatistics->Lines->Add("RL: " + IntToStr(this->wheel->getTypeCounter(RL)));
+	this->memoStatistics->Lines->Add("RR: " + IntToStr(this->wheel->getTypeCounter(RR)));
+
+	this->memoStatistics->Lines->Add("");
+	this->memoStatistics->Lines->Add("Tempo de Trânsito das Mensagens");
+	this->memoStatistics->Lines->Add("MIN: " + this->lblMinMessageValue->Caption);
+	this->memoStatistics->Lines->Add("MÉDIA: " + this->lblAverageMessageValue->Caption);
+	this->memoStatistics->Lines->Add("MAX: " + this->lblMaxMessageValue->Caption);
+
+	if (saveDlg->Execute()) {
+        this->memoStatistics->Lines->SaveToFile(saveDlg->FileName);
+	}
+}
+//---------------------------------------------------------------------------
 

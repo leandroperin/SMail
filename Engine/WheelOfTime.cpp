@@ -17,8 +17,8 @@ WheelOfTime::WheelOfTime() {
 	this->eventsList = new std::list<Event*>;
 	this->pastEvents = new std::list<Event*>;
 
-	this->center1queue = new std::queue<Event*>;
-	this->center2queue = new std::queue<Event*>;
+	this->center1queue = new std::list<Event*>;
+	this->center2queue = new std::list<Event*>;
 	this->center1capacity = frmSettings->edtCenter1Capacity->Text.ToInt();
     this->center2capacity = frmSettings->edtCenter2Capacity->Text.ToInt();
 
@@ -95,6 +95,14 @@ void WheelOfTime::increaseTime() {
 	this->inSystemMessagesAcum += this->inSystemMessagesCounter * (this->currentTime - oldTime);
 }
 
+std::list<Event*>* WheelOfTime::getCenter1Queue() {
+	return this->center1queue;
+}
+
+std::list<Event*>* WheelOfTime::getCenter2Queue() {
+   	return this->center2queue;
+}
+
 int WheelOfTime::getMessageCounter() {
 	return this->messageCounter;
 }
@@ -158,7 +166,7 @@ void WheelOfTime::executeEvents() {
 
 					if (!this->center1queue->empty()) {
 						Event* queuedEvent = this->center1queue->front();
-						this->center1queue->pop();
+						this->center1queue->pop_front();
 						queuedEvent->incTime(this->currentTime - queuedEvent->getInQueueTime());
                         this->addEvent(queuedEvent);
 					}
@@ -167,7 +175,7 @@ void WheelOfTime::executeEvents() {
 
 					if (!this->center2queue->empty()) {
 						Event* queuedEvent = this->center2queue->front();
-						this->center2queue->pop();
+						this->center2queue->pop_front();
 						queuedEvent->incTime(this->currentTime - queuedEvent->getInQueueTime());
                         this->addEvent(queuedEvent);
 					}
@@ -185,7 +193,7 @@ void WheelOfTime::executeEvents() {
 						this->center1capacity--;
 					} else {
 						nextFutureEvent->setInQueueTime(this->currentTime);
-						this->center1queue->push(nextFutureEvent);
+						this->center1queue->push_back(nextFutureEvent);
 					}
 				} else if (toProcess == 2) {
 					if (this->center2capacity > 0) {
@@ -193,7 +201,7 @@ void WheelOfTime::executeEvents() {
 						this->center2capacity--;
 					} else {
 						nextFutureEvent->setInQueueTime(this->currentTime);
-                        this->center2queue->push(nextFutureEvent);
+                        this->center2queue->push_back(nextFutureEvent);
                     }
 				}
 
