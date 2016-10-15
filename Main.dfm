@@ -4600,32 +4600,6 @@ object frmMain: TfrmMain
     Proportional = True
     Visible = False
   end
-  object lblQueue1: TLabel
-    Left = 20
-    Top = 240
-    Width = 253
-    Height = 13
-    Caption = 'Fila de Espera do Centro de Processamento 1'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object lblQueue2: TLabel
-    Left = 20
-    Top = 354
-    Width = 253
-    Height = 13
-    Caption = 'Fila de Espera do Centro de Processamento 2'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
   object btnStartStop: TButton
     Left = 592
     Top = 444
@@ -4639,7 +4613,7 @@ object frmMain: TfrmMain
     Left = 20
     Top = 28
     Width = 309
-    Height = 201
+    Height = 442
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -4680,42 +4654,12 @@ object frmMain: TfrmMain
     TabOrder = 4
     OnClick = btnShowResultsClick
   end
-  object richQueue1: TRichEdit
-    Left = 20
-    Top = 259
-    Width = 309
-    Height = 89
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    ReadOnly = True
-    ScrollBars = ssVertical
-    TabOrder = 5
-  end
-  object richQueue2: TRichEdit
-    Left = 20
-    Top = 375
-    Width = 309
-    Height = 89
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Font.Style = []
-    ParentFont = False
-    ReadOnly = True
-    ScrollBars = ssVertical
-    TabOrder = 6
-  end
   object memoStatistics: TMemo
     Left = 650
     Top = 6
     Width = 129
     Height = 50
-    TabOrder = 7
+    TabOrder = 5
     Visible = False
   end
   object menuMain: TMainMenu

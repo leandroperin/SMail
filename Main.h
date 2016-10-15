@@ -72,10 +72,6 @@ __published:	// IDE-managed Components
 	TLabel *lblMaxMessageValue;
 	TImage *imgRocketOff;
 	TImage *imgRocketOn;
-	TRichEdit *richQueue1;
-	TRichEdit *richQueue2;
-	TLabel *lblQueue1;
-	TLabel *lblQueue2;
 	TSaveTextFileDialog *saveDlg;
 	TMemo *memoStatistics;
 	void __fastcall btnExitClick(TObject *Sender);
@@ -88,6 +84,8 @@ __published:	// IDE-managed Components
 	void __fastcall btnShowResultsClick(TObject *Sender);
 private:	// User declarations
 	void addPastEvent(Event*);
+    void updateGUI();
+
 	bool isRunning;
 	WheelOfTime* wheel;
 	std::list<Event *>* pastEvents;

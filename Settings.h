@@ -139,7 +139,6 @@ __published:	// IDE-managed Components
 	TLabel *lblMessageTimeLimit;
 	TEdit *edtMessageTimeLimit;
 	void __fastcall btnResetClick(TObject *Sender);
-	void __fastcall btnApplyClick(TObject *Sender);
 	void __fastcall verifyTSDistribution(TComboBox *cb, TEdit *e2, TEdit *e3);
 	void __fastcall comboLLSSelect(TObject *Sender);
 	void __fastcall comboLLFSelect(TObject *Sender);

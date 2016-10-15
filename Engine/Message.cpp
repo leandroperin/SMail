@@ -71,8 +71,7 @@ void Message::moveOn() {
 		if (this->destiny == Delayed) {
 			this->calculateMessageTimes();
 
-			this->status = Reception;
-			this->nextStatusChange += this->TS_Reception;
+			this->nextStatusChange += this->TS_Processing;
 		} else
 			this->status = Finalized;
 	}

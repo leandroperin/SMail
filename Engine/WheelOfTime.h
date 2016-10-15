@@ -30,6 +30,8 @@ class WheelOfTime {
 	double getAverageTimeSpent();
 	double getMaxTimeSpent();
 	double getMinTimeSpent();
+	double getCenter1Usage();
+	double getCenter2Usage();
  private:
  	void executeEvents();
 	void createMessage();
@@ -43,6 +45,8 @@ class WheelOfTime {
 	std::list<Event *>* center2queue;
 	int center1capacity;
 	int center2capacity;
+	int center1usage;
+	int center2usage;
 
 	Event* lastArrival;
 

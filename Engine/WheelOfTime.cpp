@@ -20,7 +20,9 @@ WheelOfTime::WheelOfTime() {
 	this->center1queue = new std::list<Event*>;
 	this->center2queue = new std::list<Event*>;
 	this->center1capacity = frmSettings->edtCenter1Capacity->Text.ToInt();
-    this->center2capacity = frmSettings->edtCenter2Capacity->Text.ToInt();
+	this->center2capacity = frmSettings->edtCenter2Capacity->Text.ToInt();
+	this->center1usage = 0;
+	this->center2usage = 0;
 
 	this->currentTime = 0;
 
@@ -150,6 +152,14 @@ double WheelOfTime::getMinTimeSpent() {
     return (double) this->minTimeSpent / 100;
 }
 
+double WheelOfTime::getCenter1Usage() {
+	return (double) this->center1usage / this->currentTime;
+}
+
+double WheelOfTime::getCenter2Usage() {
+	return (double) this->center2usage / this->currentTime;
+}
+
 void WheelOfTime::executeEvents() {
 	this->pastEvents->clear();
 
@@ -191,14 +201,16 @@ void WheelOfTime::executeEvents() {
 					if (this->center1capacity > 0) {
 						toProcess = 0;
 						this->center1capacity--;
+						this->center1usage++;
 					} else {
 						nextFutureEvent->setInQueueTime(this->currentTime);
 						this->center1queue->push_back(nextFutureEvent);
-					}
+				   	}
 				} else if (toProcess == 2) {
 					if (this->center2capacity > 0) {
 						toProcess = 0;
 						this->center2capacity--;
+						this->center2usage++;
 					} else {
 						nextFutureEvent->setInQueueTime(this->currentTime);
                         this->center2queue->push_back(nextFutureEvent);

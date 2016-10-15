@@ -44,7 +44,11 @@ Event* Event::getNextEvent() {
 		if (this->message->getStatus() == Reception) {
 			desc = " foi recebida";
 		} else {
-			desc = " foi processada";
+			if (this->message->getDestiny() == Delayed) {
+                desc = " foi adiada";
+			} else {
+             	desc = " foi processada";
+			}
 		}
 
 		int time = this->message->getNextStatusChange();

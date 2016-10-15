@@ -83,30 +83,6 @@ void __fastcall TfrmSettings::btnResetClick(TObject *Sender)
 	edtRRATS1->Text = "0,63"; edtRRATS2->Text = "0,04"; edtRRATS3->Text = "0,00";
 }
 //---------------------------------------------------------------------------
-void __fastcall TfrmSettings::btnApplyClick(TObject *Sender)
-{
-	try {
-    	if (edtLL->Text.ToInt() + edtLR->Text.ToInt()
-			+ edtRL->Text.ToInt() + edtRR->Text.ToInt() != 100) {
-			ShowMessage("O volume de tráfego deve ser sempre 100%!");
-		} else if ((edtLLS->Text.ToDouble() + edtLLF->Text.ToDouble()
-			   + edtLLA->Text.ToDouble() != 100.00) ||
-			   (edtLRS->Text.ToDouble() + edtLRF->Text.ToDouble()
-			   + edtLRA->Text.ToDouble() != 100.00) ||
-			   (edtRLS->Text.ToDouble() + edtRLF->Text.ToDouble()
-			   + edtRLA->Text.ToDouble() != 100.00) ||
-			   (edtRRS->Text.ToDouble() + edtRRF->Text.ToDouble()
-			   + edtRRA->Text.ToDouble() != 100.00)
-			   ) {
-			   ShowMessage("A soma das taxas SFA devem ser sempre 100%!");
-		} else if (edtCenter1Capacity->Text.ToInt() <= 0
-				   || edtCenter2Capacity->Text.ToInt() <= 0) {
-               ShowMessage("A quantidade de servidores deve ser maior que 0!");
-		}
-	} catch (Exception& e) {
-		ShowMessage(e.ToString());
-	}
-}
 
 void __fastcall TfrmSettings::verifyTSDistribution(TComboBox *cb, TEdit *e2, TEdit *e3) {
     switch (cb->ItemIndex) {

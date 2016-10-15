@@ -114,68 +114,8 @@ void __fastcall TfrmMain::clockTimer(TObject *Sender)
 		}
 
 		this->wheel->increaseTime();
-		this->lblSimulatedValue->Caption = (double) this->wheel->getCurrentTime() / 100;
 
-		this->lblMessageCounterValue->Caption = IntToStr(
-		this->wheel->getDispatchedMessagesCounter()) + " / "
-		+ this->wheel->getMessageCounter();
-
-		int inSystemMessages = this->wheel->getInSystemMessagesCounter();
-		if (this->lblMinMessagesValue->Caption == "0") {
-			this->lblMinMessagesValue->Caption = inSystemMessages;
-		}
-		if (inSystemMessages < this->lblMinMessagesValue->Caption) {
-			this->lblMinMessagesValue->Caption = inSystemMessages;
-		}
-		if (inSystemMessages > this->lblMaxMessagesValue->Caption) {
-			this->lblMaxMessagesValue->Caption = inSystemMessages;
-		}
-		this->lblAverageMessagesValue->Caption = FormatFloat("#0.00",
-		this->wheel->getInSystemMessagesAverage());
-
-		this->lblAverageMessageValue->Caption =  FormatFloat("#0.00",
-		this->wheel->getAverageTimeSpent());
-
-		this->lblMaxMessageValue->Caption = FormatFloat("#0.00",
-		this->wheel->getMaxTimeSpent());
-
-		this->lblMinMessageValue->Caption = FormatFloat("#0.00",
-		this->wheel->getMinTimeSpent());
-
-		this->lblLLCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(LL))
-		+ " / " + IntToStr(this->wheel->getTypeCounter(LL));
-		this->lblLRCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(LR))
-		+ " / " + IntToStr(this->wheel->getTypeCounter(LR));
-		this->lblRLCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(RL))
-		+ " / " + IntToStr(this->wheel->getTypeCounter(RL));
-		this->lblRRCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(RR))
-		+ " / " + IntToStr(this->wheel->getTypeCounter(RR));
-
-		this->richQueue1->Clear();
-		this->richQueue2->Clear();
-		std::list<Event*>* queueCenter1 = this->wheel->getCenter1Queue();
-		std::list<Event*>* queueCenter2 = this->wheel->getCenter2Queue();
-
-		std::list<Event*>::iterator it;
-
-		it = queueCenter1->begin();
-		while (it != queueCenter1->end()) {
-			std::stringstream ss;
-			ss << "Mensagem: " << (*it)->getMessageID();
-			richQueue1->Lines->Add(ss.str().c_str());
-
-			++it;
-		}
-
-		it = queueCenter2->begin();
-		while (it != queueCenter2->end()) {
-			std::stringstream ss;
-			ss << "Mensagem: " << (*it)->getMessageID();
-			richQueue2->Lines->Add(ss.str().c_str());
-
-			++it;
-		}
-
+		this->updateGUI();
 
 		if (this->lblSimulatedValue->Caption.ToDouble() >=
 			frmSettings->edtMaxSimTime->Text.ToDouble()) {
@@ -188,6 +128,47 @@ void __fastcall TfrmMain::clockTimer(TObject *Sender)
 	}
 }
 //---------------------------------------------------------------------------
+
+void TfrmMain::updateGUI() {
+	this->lblSimulatedValue->Caption = (double) this->wheel->getCurrentTime() / 100;
+
+	int inSystemMessages = this->wheel->getInSystemMessagesCounter();
+	if (this->lblMinMessagesValue->Caption == "0")
+		this->lblMinMessagesValue->Caption = inSystemMessages;
+	if (inSystemMessages < this->lblMinMessagesValue->Caption)
+		this->lblMinMessagesValue->Caption = inSystemMessages;
+	if (inSystemMessages > this->lblMaxMessagesValue->Caption)
+		this->lblMaxMessagesValue->Caption = inSystemMessages;
+	this->lblAverageMessagesValue->Caption = FormatFloat("#0.00",
+	this->wheel->getInSystemMessagesAverage());
+
+    this->lblCenter1Average->Caption = FormatFloat("#0.00",
+	this->wheel->getCenter1Usage()*100);
+	this->lblCenter2Average->Caption = FormatFloat("#0.00",
+	this->wheel->getCenter2Usage()*100);
+
+    this->lblMessageCounterValue->Caption = IntToStr(
+		this->wheel->getDispatchedMessagesCounter()) + " / "
+		+ this->wheel->getMessageCounter();
+
+    this->lblLLCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(LL))
+		+ " / " + IntToStr(this->wheel->getTypeCounter(LL));
+	this->lblLRCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(LR))
+		+ " / " + IntToStr(this->wheel->getTypeCounter(LR));
+	this->lblRLCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(RL))
+		+ " / " + IntToStr(this->wheel->getTypeCounter(RL));
+	this->lblRRCounterValue->Caption = IntToStr(this->wheel->getTypeAcum(RR))
+		+ " / " + IntToStr(this->wheel->getTypeCounter(RR));
+
+    this->lblAverageMessageValue->Caption =  FormatFloat("#0.00",
+		this->wheel->getAverageTimeSpent());
+
+	this->lblMaxMessageValue->Caption = FormatFloat("#0.00",
+		this->wheel->getMaxTimeSpent());
+
+	this->lblMinMessageValue->Caption = FormatFloat("#0.00",
+		this->wheel->getMinTimeSpent());
+}
 
 
 void __fastcall TfrmMain::btnShowResultsClick(TObject *Sender)
